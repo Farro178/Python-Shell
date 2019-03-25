@@ -43,11 +43,20 @@ class MyPrompt(Cmd):
 		print("\033c")
 
 	def do_environ(self, args):
-		print(os.environ["HOME"])
+		"""should print out the same as the env command"""
+		print(os.environ.items())
+
 
 	def do_echo(self, args):
-		print("DAB")
+		"""Echoes the arguement."""
+		words = args.split()
+		new_word = ""
+		for word in words:
+			new_word = new_word + " " + word
+		print(new_word[1:])
+
 	def do_pause(self, args):
+		"Program is paused, press enter to continue."
 		input()
 
 
