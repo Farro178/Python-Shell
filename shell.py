@@ -1,5 +1,6 @@
 from cmd import Cmd
-import os, sys
+import os
+
 class MyPrompt(Cmd):
 	
 	def do_hello(self, args): 
@@ -16,21 +17,38 @@ class MyPrompt(Cmd):
 		print ("Quitting")
 		raise SystemExit
 
-	def do_ls(self, args):
+	def do_dir(self, args):
 		"""Names files and directories in current directory"""
 		path = "."
-		if len(sys.argv) == 2:
-			path = sys.argv[1]
 
+		if len(args) == 0:
+			path = "."
+		else:
+			path = args
+		
 		files = os.listdir(path)
 		for name in files:
 			print(name)
-	
+
 	def do_cd(self, args):
 		"""Changes the current directory"""
-		if len(args) == 2:
-			path = args		
-		os.getcwd(path)
+		if len(args) == 0:
+			print(os.getcwd())
+		else:	
+			path = args	
+			os.chdir(path)
+
+	def do_clr(self, args):
+		"""Clears the screen"""
+		print("\033c")
+
+	def do_environ(self, args):
+		print(os.environ["HOME"])
+
+	def do_echo(self, args):
+		print("DAB")
+	def do_pause(self, args):
+		input()
 
 
 if __name__ == '__main__':
