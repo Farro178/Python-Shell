@@ -25,10 +25,12 @@ class MyPrompt(Cmd):
 			path = "."
 		else:
 			path = args
-		
+			
 		files = os.listdir(path)
 		for name in files:
 			print(name)
+
+
 
 	def do_cd(self, args):
 		"""Changes the current directory"""
@@ -37,6 +39,7 @@ class MyPrompt(Cmd):
 		else:	
 			path = args	
 			os.chdir(path)
+			prompt.prompt = os.getcwd() + "/myshell: >" 
 
 	def do_clr(self, args):
 		"""Clears the screen"""
