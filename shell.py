@@ -44,7 +44,8 @@ class MyPrompt(Cmd):
 
 	def do_environ(self, args):
 		"""should print out the same as the env command"""
-		print(os.environ.items())
+		for key in os.environ.keys():
+			print("{} : {}".format(key, os.environ[key]) + "\n")
 
 
 	def do_echo(self, args):
@@ -62,5 +63,5 @@ class MyPrompt(Cmd):
 
 if __name__ == '__main__':
 	prompt = MyPrompt()
-	prompt.prompt = '>'
+	prompt.prompt = os.getcwd() + "/myshell: >" 
 	prompt.cmdloop("Starting prompt...")
