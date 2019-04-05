@@ -72,7 +72,8 @@ class MyPrompt(Cmd):
 if __name__ == '__main__':
 	if len(sys.argv) == 2:
 		with open(sys.argv[1], "r") as f:
-			for line in f.readlines():
+			lines = f.readlines()
+			for line in lines:
 				line = line.strip()
 				print(line)
 				MyPrompt().onecmd(line)
