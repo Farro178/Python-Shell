@@ -1,7 +1,10 @@
 from cmd import Cmd
 import os
+import sys
 
 class MyPrompt(Cmd):
+
+
 	
 	def do_hello(self, args): 
 		"""Says hello. If you provide a name, it will greet you with it."""
@@ -26,7 +29,7 @@ class MyPrompt(Cmd):
 		else:
 			path = args
 			
-		files = os.listdir(path)
+		files = os.listdir(args)
 		for name in files:
 			print(name)
 
@@ -36,10 +39,10 @@ class MyPrompt(Cmd):
 		"""Changes the current directory"""
 		if len(args) == 0:
 			print(os.getcwd())
-		else:	
-			path = args	
+		else:   
+			path = args 
 			os.chdir(path)
-			prompt.prompt = os.getcwd() + "/myshell: >" 
+			prompt.prompt = "~" + os.getcwd() + ": >" 
 
 	def do_clr(self, args):
 		"""Clears the screen"""
@@ -60,11 +63,20 @@ class MyPrompt(Cmd):
 		print(new_word[1:])
 
 	def do_pause(self, args):
-		"Program is paused, press enter to continue."
-		input()
+		input("Program is paused, press enter to continue.")
+
+
+
 
 
 if __name__ == '__main__':
-	prompt = MyPrompt()
-	prompt.prompt = os.getcwd() + "/myshell: >" 
-	prompt.cmdloop("Starting prompt...")
+	if len(sys.argv) == 2:
+		with open(sys.argv[1], "r") as f:
+			for line in f.readlines():
+				line = line.strip()
+				print(line)
+				MyPrompt().onecmd(line)
+	else:
+		prompt = MyPrompt()
+		prompt.prompt = "~" + os.getcwd() + "/myshell: >"
+		prompt.cmdloop("Starting prompt")
