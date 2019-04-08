@@ -66,17 +66,14 @@ class MyPrompt(Cmd):
 		input("Program is paused, press enter to continue.")
 
 
-
-
-
 if __name__ == '__main__':
 	if len(sys.argv) == 2:
 		with open(sys.argv[1], "r") as f:
 			lines = f.readlines()
-			for line in lines:
-				line = line.strip()
-				print(line)
-				MyPrompt().onecmd(line)
+		for line in lines:
+			line = line.strip("\n")
+			print(line)
+			MyPrompt().onecmd(line)
 	else:
 		prompt = MyPrompt()
 		prompt.prompt = "~" + os.getcwd() + "/myshell: >"
