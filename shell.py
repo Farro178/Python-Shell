@@ -22,27 +22,36 @@ class MyPrompt(Cmd):
 
 	def do_dir(self, args):
 		"""Names files and directories in current directory"""
-		path = "."
-
-		if len(args) == 0:
+		try:
 			path = "."
-		else:
-			path = args
-			
-		files = os.listdir(args)
-		for name in files:
-			print(name)
+			if len(args) == 0:
+				path = "."
+			else:
+				path = args
+				
+			files = os.listdir(path)
+			for name in files:
+				print(name)
+		except NotADirectoryError:
+			print("Error: This is not a directory: " + path)
+		except FileNotFoundError:
+			print("Error: File or Directory not found: " + path)
 
 
 
 	def do_cd(self, args):
 		"""Changes the current directory"""
-		if len(args) == 0:
-			print(os.getcwd())
-		else:   
-			path = args 
-			os.chdir(path)
-			prompt.prompt = "~" + os.getcwd() + ": >" 
+		try:
+			if len(args) == 0:
+				print(os.getcwd())
+			else:   
+				path = args 
+				os.chdir(path)
+				prompt.prompt = "~" + os.getcwd() + ": >" 
+		except NotADirectoryError:
+			print("Error: This is not a directory: " + path)
+		except FileNotFoundError:
+			print("Error: File or Directory not found: " + path)
 
 	def do_clr(self, args):
 		"""Clears the screen"""
@@ -65,8 +74,13 @@ class MyPrompt(Cmd):
 	def do_pause(self, args):
 		input("Program is paused, press enter to continue.")
 
+	def do_help(self, args):
+		print("poop")
+
 
 if __name__ == '__main__':
+	prompt = MyPrompt()
+	prompt.prompt = "~" + os.getcwd() + "/myshell: >"
 	if len(sys.argv) == 2:
 		with open(sys.argv[1], "r") as f:
 			lines = f.readlines()
@@ -75,6 +89,4 @@ if __name__ == '__main__':
 			print(line)
 			MyPrompt().onecmd(line)
 	else:
-		prompt = MyPrompt()
-		prompt.prompt = "~" + os.getcwd() + "/myshell: >"
 		prompt.cmdloop("Starting prompt")
