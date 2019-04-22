@@ -7,7 +7,6 @@ class MyPrompt(Cmd):
 
 	
 	def do_hello(self, args): 
-		"""Says hello. If you provide a name, it will greet you with it."""
 		if len(args) == 0:
 			name = "stranger"
 		else:
@@ -21,7 +20,6 @@ class MyPrompt(Cmd):
 		raise SystemExit
 
 	def do_dir(self, args):
-		"""Names files and directories in current directory"""
 		try:
 			path = "."
 			if len(args) == 0:
@@ -40,7 +38,6 @@ class MyPrompt(Cmd):
 
 
 	def do_cd(self, args):
-		"""Changes the current directory"""
 		try:
 			if len(args) == 0:
 				print(os.getcwd())
@@ -64,7 +61,6 @@ class MyPrompt(Cmd):
 
 
 	def do_echo(self, args):
-		"""Echoes the arguement."""
 		words = args.split()
 		new_word = ""
 		for word in words:
@@ -75,7 +71,27 @@ class MyPrompt(Cmd):
 		input("Program is paused, press enter to continue.")
 
 	def do_help(self, args):
-		print("poop")
+		if args == "":
+			print("These commands are defined within the shell.")
+			print("For more information on each command type: help <command>")
+			commands = {
+						"echo" : "Echoes the arguement.",
+						"environ" : "Should print out the same as the env command.",
+						"clr" : "Clears the screen.",
+						"hello" : "Says hello. If you provide a name, it will greet you with it.",
+						"dir" : "Names files and directories in current directory.",
+						"cd" : "Changes the current directory",
+						"pause" : "Pauses the terminal until the enter key is pressed."
+
+						}
+			maxi = 0
+			for key in commands:
+				if len(key) > maxi:
+					maxi = len(key)
+			for keys, values in commands.items():
+				leng = maxi - len(keys)
+				print(keys + (" " * (leng + 5) + values))
+
 
 
 if __name__ == '__main__':
